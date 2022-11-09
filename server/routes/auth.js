@@ -39,7 +39,6 @@ router.post('/register', async(req, res) => {
 }
 )
 
-<<<<<<< HEAD
 // @route POST api/auth/login
 // @desc login user
 // @access Public
@@ -82,8 +81,6 @@ router.post('/login', async(req, res) => {
     }
 })
 
-=======
->>>>>>> f848f8963236f1b8dcd134c40d46694db330836c
 router.get('/', (req, res) => res.send('USER ROUTE'))
 
 module.exports = router

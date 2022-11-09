@@ -1,14 +1,31 @@
 const express = require('express')
 const router =  express.Router()
+const verifyToken = require('../middleware/auth')
 
 const Post = require('../models/Post')
 const { route } = require('./auth')
+
+// @route GET api/posts
+// @desc Create post
+// @access Private 
+
+router.get('/', verifyToken, async(req, res) => {
+    try {
+        const posts = await Post.find({user: req.userId}).populate('user', [
+            'username'
+        ])
+        res.json({success: true, posts})
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({success: false, message: 'Internal Server error'})
+    }
+})
 
 // @route POST api/posts
 // @desc Create post
 // @access Private 
 
-router.post('/', async(req, res) => {
+router.post('/', verifyToken, async(req, res) => {
     const{title, description, url, status} = req.body
 
     // Simpe validation
@@ -21,7 +38,7 @@ router.post('/', async(req, res) => {
             description, 
             url: url.startsWith('https://') ? url: `https://${url}`,
             status: status || 'TO LEARN',
-            user: '6367cd7a8a1ff1023031573d'
+            user: req.userId
         })
 
         await newPost.save()
@@ -32,5 +49,9 @@ router.post('/', async(req, res) => {
         res.status(500).json({success: false, message: 'Internal Server error'})
     }
 })
+
+// @route PUT api/posts
+// @desc Update post
+// @access Private 
 
 module.exports = router
