@@ -12,7 +12,7 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-
+    // Access Token
     createdAt: {
         type: Date,
         default: Date.now

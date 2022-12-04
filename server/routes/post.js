@@ -3,6 +3,7 @@ const router =  express.Router()
 const verifyToken = require('../middleware/auth')
 
 const Post = require('../models/Post')
+const { findOneAndUpdate, findOneAndDelete } = require('../models/User')
 const { route } = require('./auth')
 
 // @route GET api/posts
@@ -53,5 +54,66 @@ router.post('/', verifyToken, async(req, res) => {
 // @route PUT api/posts
 // @desc Update post
 // @access Private 
+router.put('/:id', verifyToken, async(req, res)=> {
+    const {title, description, url, status} = req.body;
+    if(!title)
+    return res
+            .status(400)
+            .json({success: false, message: 'Title is required'})
+    try {
+        let updatedPost =  {
+            title, 
+            description: description || '', 
+            url: url.startsWith('https://') ? url: `https://${url}` || '',
+            status: status || 'TO LEARN'
+        }
+        const postUpdateCondition ={ _id: req.params.id, user: req.userId}
+        updatePost = await Post.findOneAndUpdate(postUpdateCondition, updatedPost, {new: true});
+        if (!updatePost) {
+            return res
+            .status(401)
+            .json({success: false, message: 'User not authorize or post not found'})
+        } else {
+            return res
+            .status(200)
+            .json({success: true, message: 'Excellent!'})    
+        }
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({success: false, message: 'Internal Server error'})
+    }
+})
 
+// @route DELETE api/posts
+// @desc DELETE post
+// @access Private 
+router.delete('/:id', verifyToken, async(req, res)=> {
+    const {title, description, url, status} = req.body;
+    if(!title)
+    return res
+            .status(400)
+            .json({success: false, message: 'Title is required'})
+    try {
+        let deletePost =  {
+            title, 
+            description: description || '', 
+            url: url.startsWith('https://') ? url: `https://${url}` || '',
+            status: status || 'TO LEARN'
+        }
+        const deletePostCondition ={ _id: req.params.id, user: req.userId}
+        isDeletedPost = await Post.findOneAndDelete(deletePostCondition, deletePost);
+        if (!isDeletedPost) {
+            return res
+            .status(401)
+            .json({success: false, message: 'User not authorize or post not deleted'})
+        } else {
+            return res
+            .status(200)
+            .json({success: true, message: 'Deleted Excellent!'})    
+        }
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({success: false, message: 'Internal Server error'})
+    }
+})
 module.exports = router
