@@ -64,12 +64,12 @@ router.put('/:id', verifyToken, async(req, res)=> {
         let updatedPost =  {
             title, 
             description: description || '', 
-            url: url.startsWith('https://') ? url: `https://${url}` || '',
+            url: (url.startsWith('https://') ? url: `https://${url}`) || '',
             status: status || 'TO LEARN'
         }
         const postUpdateCondition ={ _id: req.params.id, user: req.userId}
-        updatePost = await Post.findOneAndUpdate(postUpdateCondition, updatedPost, {new: true});
-        if (!updatePost) {
+        updatedPost = await Post.findOneAndUpdate(postUpdateCondition, updatedPost, {new: true});
+        if (!updatedPost) {
             return res
             .status(401)
             .json({success: false, message: 'User not authorize or post not found'})
@@ -88,20 +88,9 @@ router.put('/:id', verifyToken, async(req, res)=> {
 // @desc DELETE post
 // @access Private 
 router.delete('/:id', verifyToken, async(req, res)=> {
-    const {title, description, url, status} = req.body;
-    if(!title)
-    return res
-            .status(400)
-            .json({success: false, message: 'Title is required'})
     try {
-        let deletePost =  {
-            title, 
-            description: description || '', 
-            url: url.startsWith('https://') ? url: `https://${url}` || '',
-            status: status || 'TO LEARN'
-        }
         const deletePostCondition ={ _id: req.params.id, user: req.userId}
-        isDeletedPost = await Post.findOneAndDelete(deletePostCondition, deletePost);
+        const isDeletedPost = await Post.findOneAndDelete(deletePostCondition);
         if (!isDeletedPost) {
             return res
             .status(401)
