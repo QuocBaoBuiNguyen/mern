@@ -76,7 +76,7 @@ router.put('/:id', verifyToken, async(req, res)=> {
         } else {
             return res
             .status(200)
-            .json({success: true, message: 'Excellent!'})    
+            .json({success: true, message: 'Update post successfully!'})    
         }
     } catch (error) {
         console.log(error)
@@ -89,6 +89,7 @@ router.put('/:id', verifyToken, async(req, res)=> {
 // @access Private 
 router.delete('/:id', verifyToken, async(req, res)=> {
     try {
+        console.log({_id: req.params.id, user: req.userId})
         const deletePostCondition ={ _id: req.params.id, user: req.userId}
         const isDeletedPost = await Post.findOneAndDelete(deletePostCondition);
         if (!isDeletedPost) {

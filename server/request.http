@@ -1,0 +1,36 @@
+###
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "Bao",
+    "password": "056"
+}
+
+###
+POST http://localhost:5000/api/posts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDI2NDYwODgwZjBjYTk3N2U3NzNiYTkiLCJpYXQiOjE2ODAyMzkzMTV9.EfYIwBzqM0V9rL3seeG6fzV4Se9_CWv_BEqDappfGwk
+
+{
+    "title": "Hoc nhanh Reactjs 5 phut",
+    "description": "Nhanh lam nan ni a hoc di",
+    "url": "",
+    "status": "TO LEARN",
+    "user": "6426460880f0ca977e773ba9"
+
+}
+
+###
+PUT  http://localhost:5000/api/posts/642b9e0b62f18199f873a6b6
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDI2NDYwODgwZjBjYTk3N2U3NzNiYTkiLCJpYXQiOjE2ODAyMzkzMTV9.EfYIwBzqM0V9rL3seeG6fzV4Se9_CWv_BEqDappfGwk
+
+{
+    "title": "Hoc nhanh Reactjs 5 phut TDZG",
+    "description": "Nhanh lam nan ni a hoc di",
+    "url": "",
+    "status": "TO LEARN",
+    "user": "6426460880f0ca977e773ba9"
+
+}
