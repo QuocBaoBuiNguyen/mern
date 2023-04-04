@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Redirect } from "react-router-dom";
 import LoginForm from "../components/auth/LoginForm"
 import RegisterForm from "../components/auth/RegisterForm"
-import Spinner from 'react-bootstrap/spinner'
+import Spinner from 'react-bootstrap/Spinner'
 import { AuthContext } from "../contexts/AuthContext";
 
 const Auth = ({authRoute}) => {
