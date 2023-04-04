@@ -1,4 +1,4 @@
-export const apiUrl = process.env.NODE_ENV !== 'production' ? 'http://localhost:5000/api' : 'urlProduction'
+export const apiUrl = process.env.NODE_ENV !== 'production' ? 'http://localhost:5000/api' : 'https://mern-production-8f59.up.railway.app/api'
 
 export const LOCAL_STORED_TOKEN_NAME = 'learnit'
 
